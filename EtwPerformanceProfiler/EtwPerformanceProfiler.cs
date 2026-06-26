@@ -134,6 +134,8 @@ namespace EtwPerformanceProfiler
         {
             get
             {
+                // "TableData","Table","Form","Report","Dataport","Codeunit","XMLport","MenuSuite","Page","Query","System","FieldNumber",,,"PageExtension","TableExtension","Enum","EnumExtension","Profile","ProfileExtension","PermissionSet","PermissionSetExtension","ReportExtension";
+
                 string objectType = this.callTree.Current.ObjectType;
 
                 // Empty object type consider to be the table.
@@ -143,47 +145,72 @@ namespace EtwPerformanceProfiler
                     return 0;
                 }
 
-                if (0 == String.Compare(objectType, "Table", System.StringComparison.OrdinalIgnoreCase))
+                switch (objectType.ToLowerInvariant())
                 {
-                    return 0;
-                }
+                    case "tabledata":
+                    case "table":
+                        return 0;
 
-                if (0 == String.Compare(objectType, "Report", System.StringComparison.OrdinalIgnoreCase))
-                {
-                    return 3;
-                }
+                    case "form":
+                        return 2;
 
-                if (0 == String.Compare(objectType, "CodeUnit", System.StringComparison.OrdinalIgnoreCase))
-                {
-                    return 5;
-                }
+                    case "report":
+                        return 3;
 
-                if (0 == String.Compare(objectType, "XmlPort", System.StringComparison.OrdinalIgnoreCase))
-                {
-                    return 6;
-                }
+                    case "dataport":
+                        return 4;
 
-                if (0 == String.Compare(objectType, "Page", System.StringComparison.OrdinalIgnoreCase))
-                {
-                    return 8;
-                }
+                    case "codeunit":
+                        return 5;
 
-                if (0 == String.Compare(objectType, "Query", System.StringComparison.OrdinalIgnoreCase))
-                {
-                    return 9;
-                }
+                    case "xmlport":
+                        return 6;
 
-                if (0 == String.Compare(objectType, "System", System.StringComparison.OrdinalIgnoreCase))
-                {
-                    return 10;
-                }
+                    case "menusuite":
+                        return 7;
 
-                if (0 == String.Compare(objectType, "PageExtension", System.StringComparison.OrdinalIgnoreCase))
-                {
-                    return 12;
-                }
+                    case "page":
+                        return 8;
 
-                throw new InvalidOperationException("Invalid object type.");
+                    case "query":
+                        return 9;
+
+                    case "system":
+                        return 10;
+
+                    case "FieldNumber":
+                        return 11;
+
+                    case "pageextension":
+                        return 14;
+
+                    case "tableextension":
+                        return 15;
+
+                    case "enum":
+                        return 16;
+
+                    case "enumextension":
+                        return 17;
+
+                    case "profile":
+                        return 18;
+
+                    case "profileextension":
+                        return 19;
+
+                    case "permissionset":
+                        return 20;
+
+                    case "permissionsetextension":
+                        return 21;
+
+                    case "reportextension":
+                        return 22;
+
+                    default:
+                        throw new InvalidOperationException($"Invalid object type: '{objectType}'.");
+                }
             }
         }
 
